@@ -1,0 +1,21 @@
+{
+    "name": "fastd/middleware",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "JanHuang",
+            "email": "bboyjanhuang@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FastD\\": "src"
+        }
+    }
+}
