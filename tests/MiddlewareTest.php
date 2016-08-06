@@ -1,4 +1,5 @@
 <?php
+use FastD\Middleware\MiddlewareInvoker;
 
 /**
  *
@@ -10,8 +11,19 @@
  */
 class MiddlewareTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        include __DIR__ . '/Middlewares/DemoMiddleware.php';
+    }
+
     public function testUsage()
     {
-        
+        $invoker = new MiddlewareInvoker();
+
+        $invoker->addMiddleware(new DemoMiddleware());
+
+        $result = $invoker->invoke();
+
+        print_r($result);
     }
 }
