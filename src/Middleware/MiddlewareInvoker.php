@@ -29,7 +29,7 @@ class MiddlewareInvoker
         $result = [];
 
         foreach ($this->middlewares as $key => $middleware) {
-            $result[$key] = $middleware->invoke();
+            $result[$key] = $middleware->handle();
         }
 
         return $result;

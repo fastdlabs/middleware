@@ -12,7 +12,7 @@ use FastD\Middleware\Middleware;
 
 class DemoMiddleware extends Middleware
 {
-    public function invoke()
+    public function handle()
     {
         return 'test';
     }

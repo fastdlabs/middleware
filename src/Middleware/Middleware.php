@@ -12,5 +12,12 @@ namespace FastD\Middleware;
 
 abstract class Middleware
 {
-    abstract public function invoke();
+    protected $previous;
+
+    public function previous (Middleware $previous)
+    {
+        $this->previous = $previous;
+    }
+
+    abstract public function handle();
 }
