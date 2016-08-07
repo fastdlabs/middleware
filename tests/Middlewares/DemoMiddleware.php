@@ -1,5 +1,6 @@
 <?php
-use FastD\Middleware\Middleware;
+
+use FastD\Middleware\MiddlewareInterface;
 
 /**
  *
@@ -10,7 +11,7 @@ use FastD\Middleware\Middleware;
  * @link      http://www.fast-d.cn/
  */
 
-class DemoMiddleware extends Middleware
+class DemoMiddleware implements MiddlewareInterface
 {
     public function handle()
     {

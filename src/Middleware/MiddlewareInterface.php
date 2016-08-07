@@ -10,14 +10,15 @@
 
 namespace FastD\Middleware;
 
-abstract class Middleware
+/**
+ * Class Middleware
+ *
+ * @package FastD\Middleware
+ */
+interface MiddlewareInterface
 {
-    protected $previous;
-
-    public function previous (Middleware $previous)
-    {
-        $this->previous = $previous;
-    }
-
-    abstract public function handle();
+    /**
+     * @return mixed
+     */
+    public function handle();
 }

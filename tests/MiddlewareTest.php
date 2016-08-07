@@ -18,12 +18,8 @@ class MiddlewareTest extends PHPUnit_Framework_TestCase
 
     public function testUsage()
     {
-        $invoker = new MiddlewareInvoker();
+        $middleware = new DemoMiddleware();
 
-        $invoker->addMiddleware(new DemoMiddleware());
-
-        $result = $invoker->invoke();
-
-        print_r($result);
+        $this->assertEquals('test', $middleware->handle());
     }
 }
