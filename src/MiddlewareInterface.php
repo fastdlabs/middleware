@@ -17,8 +17,5 @@ namespace FastD\Middleware;
  */
 interface MiddlewareInterface
 {
-    /**
-     * @return mixed
-     */
-    public function handle();
+    public function handle($request, $response, callable $next);
 }
