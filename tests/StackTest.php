@@ -1,4 +1,5 @@
 <?php
+use FastD\Middleware\Network\Http\RequestMiddleware;
 use FastD\Middleware\Stack;
 
 /**
@@ -20,35 +21,94 @@ class StackTest extends PHPUnit_Framework_TestCase
         $this->stack = new Stack();
     }
 
-    public function testBeforeMiddleware()
+    public function testStackLogic()
     {
-        $this->stack->append('hello', function ($handle) {
-            return function () use ($handle) {
-                echo 'after' . PHP_EOL;
-                $handle();
-            };
+        $this->stack->with(function () {
+            echo 'logic';
         });
 
-        $this->stack->run(function () {
-            echo 'meet' . PHP_EOL;
-        });
+        $this->stack->run();
 
-        $this->expectOutputString('after' . PHP_EOL . 'meet' . PHP_EOL);
+        $this->expectOutputString('logic');
     }
 
-    public function testAfterMiddleware()
+    public function testStackBefore()
     {
-        $this->stack->append('hello', function ($handle) {
-            return function () use ($handle) {
-                $handle();
-                echo 'after' . PHP_EOL;
-            };
-        });
+        $this->stack
+            ->with(function () {
+                echo 'logic';
+            })
+            ->before(function () {
+                echo 'before';
+            })
+            ->run();
 
-        $this->stack->run(function () {
-            echo 'meet' . PHP_EOL;
-        });
+        $this->expectOutputString('beforelogic');
+    }
 
-        $this->expectOutputString('meet' . PHP_EOL . 'after' . PHP_EOL);
+    public function testStackAfter()
+    {
+        $this->stack
+            ->with(function () {
+                echo 'logic';
+            })
+            ->after(function () {
+                echo 'after';
+            })
+            ->run();
+
+        $this->expectOutputString('logicafter');
+    }
+
+    public function testStackMixin()
+    {
+        $this->stack
+            ->with(function () {
+                echo 'logic';
+            })
+            ->before(function () {
+                echo 'before';
+            })
+            ->after(function () {
+                echo 'after';
+            })
+            ->run();
+
+        $this->expectOutputString('beforelogicafter');
+    }
+
+    public function testStackMultiMixin()
+    {
+        $this->stack
+            ->with(function () {
+                echo 'logic';
+            })
+            ->before(function () {
+                echo 'before';
+            })
+            ->before(function () {
+                echo 'b222';
+            })
+            ->after(function () {
+                echo 'after';
+            })
+            ->run();
+    }
+
+    public function testStackMiddlewareObject()
+    {
+        include_once __DIR__ . '/middleware/Before.php';
+
+        $middleware = new RequestMiddleware();
+
+        $this->stack
+            ->with($middleware)
+            ->before(new Before());
+
+        $this->stack->run(null, [10]);
+
+        $result = $middleware->getResult();
+
+        $this->assertEquals($result, [10]);
     }
 }
