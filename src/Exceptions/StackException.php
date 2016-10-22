@@ -1,9 +1,5 @@
 <?php
-
-use FastD\Middleware\MiddlewareInterface;
-
 /**
- *
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
@@ -11,10 +7,11 @@ use FastD\Middleware\MiddlewareInterface;
  * @link      http://www.fast-d.cn/
  */
 
-class DemoMiddleware implements MiddlewareInterface
+namespace FastD\Middleware\Exceptions;
+
+use RuntimeException;
+
+class StackException extends RuntimeException
 {
-    public function handle()
-    {
-        return 'test';
-    }
+
 }
