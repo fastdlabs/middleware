@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @author    jan huang <bboyjanhuang@gmail.com>
  * @copyright 2016
  *
@@ -11,24 +10,33 @@
 namespace FastD\Middleware;
 
 /**
- * Interface MiddlewareInterface
+ * Class Middleware
  *
  * @package FastD\Middleware
  */
-interface MiddlewareInterface
+abstract class Middleware implements MiddlewareInterface
 {
     /**
-     * @param MiddlewareInterface $prev
-     * @param array $arguments
-     * @param MiddlewareInterface $next
-     * @return mixed
+     * @var mixed
      */
-    public function handle($arguments = []);
+    protected $result;
 
     /**
-     * Get previous middleware execute return results.
-     *
+     * @param array $arguments
      * @return mixed
      */
-    public function getResult();
+    public function run($arguments = [])
+    {
+        $this->result = $this->handle($arguments);
+
+        return $this->result;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
 }
