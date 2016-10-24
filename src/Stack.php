@@ -109,12 +109,13 @@ class Stack
     {
         if (!empty($this->stack[Stack::SEQUENCE_BEFORE])) {
             rsort($this->stack[Stack::SEQUENCE_BEFORE]);
+
             $before = function ($arguments) {
-                return $this->stack[Stack::SEQUENCE_BEFORE]($arguments);
+                return $arguments;
             };
             foreach ($this->stack[Stack::SEQUENCE_BEFORE] as $fn) {
-                $before = function ($arguments) use ($before, $fn, $handler) {
-                    return $fn($arguments);
+                $before = function ($arguments) use ($before, $fn) {
+                    return $fn($before($arguments));
                 };
             }
 
@@ -125,10 +126,12 @@ class Stack
 
         if (!empty($this->stack[Stack::SEQUENCE_AFTER])) {
             rsort($this->stack[Stack::SEQUENCE_AFTER]);
-            $after = function () {};
+            $after = function ($arguments) {
+                return $arguments;
+            };
             foreach ($this->stack[Stack::SEQUENCE_AFTER] as $fn) {
-                $after = function ($arguments) use ($fn) {
-                    return $fn($arguments);
+                $after = function ($arguments) use ($after, $fn) {
+                    return $fn($after($arguments));
                 };
             }
 
