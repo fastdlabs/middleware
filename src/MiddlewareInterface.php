@@ -18,9 +18,7 @@ namespace FastD\Middleware;
 interface MiddlewareInterface
 {
     /**
-     * @param MiddlewareInterface $prev
      * @param array $arguments
-     * @param MiddlewareInterface $next
      * @return mixed
      */
     public function handle($arguments = []);
