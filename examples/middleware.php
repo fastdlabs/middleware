@@ -1,18 +1,20 @@
-# middleware
+<?php
+/**
+ * @author    jan huang <bboyjanhuang@gmail.com>
+ * @copyright 2016
+ *
+ * @link      https://www.github.com/janhuang
+ * @link      http://www.fast-d.cn/
+ */
 
-FastD Middleware
+use FastD\Http\ServerRequest;
+use FastD\Middleware\DelegateInterface;
+use FastD\Middleware\Middleware;
+use FastD\Middleware\Stack;
+use Psr\Http\Message\RequestInterface;
 
-## requirement
+include __DIR__ . '/../vendor/autoload.php';
 
-* php >= 5.6
-
-## installation
-
-```
-composer require "fastd/middlware:1.0.x-dev" -vvv
-```
-
-```php
 $middleware = new Middleware(function (RequestInterface $request, DelegateInterface $next) {
     // delegate control to next middleware
     return $next($request);
@@ -26,7 +28,9 @@ $stack = new Stack();
 $stack->withoutMiddleware($middleware);
 $stack->withoutMiddleware($middleware2);
 
+echo '<pre>';
 $response = $stack->process(new ServerRequest());
-```
+echo $response->getBody()->getSize();
 
-## License MIT
+
+

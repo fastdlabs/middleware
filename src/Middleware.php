@@ -9,34 +9,75 @@
 
 namespace FastD\Middleware;
 
+use Exception;
+use FastD\Http\Response;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
 /**
  * Class Middleware
  *
  * @package FastD\Middleware
  */
-abstract class Middleware implements MiddlewareInterface
+class Middleware implements MiddlewareInterface
 {
     /**
-     * @var mixed
+     * @var callable
      */
-    protected $result;
+    protected $callback;
 
     /**
-     * @param array $arguments
-     * @return mixed
+     * Middleware constructor.
+     * @param callable $callback
      */
-    public function run($arguments = [])
+    public function __construct(callable $callback)
     {
-        $this->result = $this->handle($arguments);
-
-        return $this->result;
+        $this->callback = $callback;
     }
 
     /**
-     * @return mixed
+     * Process a client request and return a response.
+     *
+     * Takes the incoming request and optionally modifies it before delegating
+     * to the next frame to get a response.
+     *
+     * @param RequestInterface $request
+     * @param DelegateInterface $next
+     *
+     * @return ResponseInterface
+     * @throws Exception
      */
-    public function getResult()
+    public function process(RequestInterface $request, DelegateInterface $next)
     {
-        return $this->result;
+        try {
+            $return = call_user_func_array($this->callback, [$request, $next]);
+
+            if ($return instanceof ResponseInterface) {
+                $response = $return;
+                $return = '';
+            } else {
+                $response = new Response();
+            }
+
+            $body = $response->getBody();
+
+            if ($return !== '' && $body->isWritable()) {
+                $body->write($return);
+            }
+
+            return $response;
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @param DelegateInterface $next
+     * @return ResponseInterface
+     */
+    public function __invoke(RequestInterface $request, DelegateInterface $next)
+    {
+        return $this->process($request, $next);
     }
 }

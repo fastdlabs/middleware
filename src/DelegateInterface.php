@@ -9,33 +9,28 @@
 
 namespace FastD\Middleware;
 
+
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Interface MiddlewareInterface
- *
+ * Interface DelegateInterface
  * @package FastD\Middleware
  */
-interface MiddlewareInterface
+interface DelegateInterface
 {
     /**
-     * Process a client request and return a response.
-     *
-     * Takes the incoming request and optionally modifies it before delegating
-     * to the next frame to get a response.
+     * Dispatch the next available middleware and return the response.
      *
      * @param RequestInterface $request
-     * @param DelegateInterface $next
      *
      * @return ResponseInterface
      */
-    public function process(RequestInterface $request, DelegateInterface $next);
+    public function next(RequestInterface $request);
 
     /**
      * @param RequestInterface $request
-     * @param DelegateInterface $next
      * @return ResponseInterface
      */
-    public function __invoke(RequestInterface $request, DelegateInterface $next);
+    public function __invoke(RequestInterface $request);
 }
