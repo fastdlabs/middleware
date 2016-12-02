@@ -19,7 +19,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @package FastD\Middleware
  */
-class Middleware implements MiddlewareInterface
+class Middleware implements ClientMiddlewareInterface
 {
     /**
      * @var callable
