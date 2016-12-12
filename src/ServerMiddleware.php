@@ -53,8 +53,9 @@ class ServerMiddleware implements ServerMiddlewareInterface
             }
 
             $body = $response->getBody();
-
-            if ($return !== '' && $body->isWritable()) {
+            
+            if (!empty($return) && $body->isWritable()) {
+                echo $return;
                 $body->write($return);
             }
 

@@ -37,7 +37,7 @@ class Delegate implements DelegateInterface
      *
      * @param RequestInterface $request
      *
-     * @return ResponseInterface
+     * @return mixed
      */
     public function next(RequestInterface $request)
     {
@@ -46,7 +46,7 @@ class Delegate implements DelegateInterface
 
     /**
      * @param RequestInterface $request
-     * @return ResponseInterface
+     * @return mixed
      */
     public function __invoke(RequestInterface $request)
     {

@@ -18,7 +18,11 @@ class MiddlewareTest extends PHPUnit_Framework_TestCase
     public function testBaseMiddleware()
     {
         $middleware = new ServerMiddleware(function (ServerRequest $request, Delegate $next) {
-            return 'hello' . $next($request);
+            $response = $next($request);
+
+            $content = 'hello' . $response;
+
+            return $content;
         });
 
         $response = $middleware->process(new ServerRequest(), new Delegate(function (ServerRequest $request) {
