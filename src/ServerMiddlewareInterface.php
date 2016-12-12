@@ -21,11 +21,15 @@ interface ServerMiddlewareInterface extends MiddlewareInterface
 {
     /**
      * @param ServerRequestInterface $request
-     * @param DelegateInterface $frame
+     * @param DelegateInterface $next
      * @return ResponseInterface
      */
-    public function process(
-        ServerRequestInterface $request,
-        DelegateInterface $frame
-    );
+    public function process(ServerRequestInterface $request, DelegateInterface $next);
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param DelegateInterface $next
+     * @return ResponseInterface
+     */
+    public function __invoke(ServerRequestInterface $request, DelegateInterface $next);
 }

@@ -9,15 +9,15 @@
 
 
 use FastD\Middleware\Delegate;
-use FastD\Middleware\Middleware;
 use FastD\Http\ServerRequest;
+use FastD\Middleware\ServerMiddleware;
 
 
 class MiddlewareTest extends PHPUnit_Framework_TestCase
 {
     public function testBaseMiddleware()
     {
-        $middleware = new Middleware(function (ServerRequest $request, Delegate $next) {
+        $middleware = new ServerMiddleware(function (ServerRequest $request, Delegate $next) {
             return 'hello' . $next($request);
         });
 

@@ -25,7 +25,7 @@ class StackTest extends PHPUnit_Framework_TestCase
 
     public function testStackLogic()
     {
-        $middleware = new Middleware(function (ServerRequestInterface $serverRequest, DelegateInterface $delegate) {
+        $middleware = new \FastD\Middleware\ServerMiddleware(function (ServerRequestInterface $serverRequest, DelegateInterface $delegate) {
             return 'hello world';
         });
 

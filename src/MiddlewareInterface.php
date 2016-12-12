@@ -9,8 +9,6 @@
 
 namespace FastD\Middleware;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Interface MiddlewareInterface
@@ -19,10 +17,5 @@ use Psr\Http\Message\ResponseInterface;
  */
 interface MiddlewareInterface
 {
-    /**
-     * @param RequestInterface $request
-     * @param DelegateInterface $next
-     * @return ResponseInterface
-     */
-    public function __invoke(RequestInterface $request, DelegateInterface $next);
+
 }
