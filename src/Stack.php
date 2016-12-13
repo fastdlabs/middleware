@@ -27,6 +27,11 @@ class Stack implements StackInterface
      */
     protected $middleware = [];
 
+    public function __construct(array $stack = [])
+    {
+        $this->middleware = $stack;
+    }
+
     /**
      * Return an instance with the specified middleware added to the stack.
      *
