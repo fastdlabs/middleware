@@ -51,6 +51,17 @@ class Stack implements StackInterface
     }
 
     /**
+     * @param MiddlewareInterface $middleware
+     * @return self
+     */
+    public function withAddMiddleware(MiddlewareInterface $middleware)
+    {
+        $this->middleware[] = $middleware;
+
+        return $this;
+    }
+
+    /**
      * Return an instance without the specified middleware.
      *
      * This method MUST be implemented in such a way as to retain the
