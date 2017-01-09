@@ -23,9 +23,8 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
             })
         ]);
 
-        $response = $dispatcher->dispatch(new ServerRequest());
+        $dispatcher->dispatch(new ServerRequest());
 
-        $response->getBody()->rewind();
-        $response->getBody()->getContents();
+        $this->expectOutputString('hello world');
     }
 }

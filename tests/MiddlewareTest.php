@@ -20,9 +20,9 @@ class MiddlewareTest extends PHPUnit_Framework_TestCase
         $middleware = new ServerMiddleware(function (ServerRequest $request, Delegate $next) {
             $response = $next($request);
 
-            $content = 'hello' . $response;
+            $content = 'hello ' . $response;
 
-            return $content;
+            echo $content;
         });
 
         $response = $middleware->process(new ServerRequest(), new Delegate(function (ServerRequest $request) {
@@ -30,7 +30,7 @@ class MiddlewareTest extends PHPUnit_Framework_TestCase
         }));
 
         $response->getBody()->rewind();
-
         echo $response->getBody()->getContents();
+        $this->expectOutputString('hello world');
     }
 }

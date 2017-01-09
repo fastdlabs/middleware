@@ -31,8 +31,6 @@ class StackTest extends PHPUnit_Framework_TestCase
 
         $this->stack->withMiddleware($middleware);
 
-//        echo $this->stack->count();
-
-//        echo gettype($this->stack[0]);
+        $this->assertEquals(1, $this->stack->count());
     }
 }
