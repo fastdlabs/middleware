@@ -17,5 +17,4 @@ namespace FastD\Middleware;
  */
 interface MiddlewareInterface
 {
-
 }

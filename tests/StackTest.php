@@ -21,13 +21,12 @@ class StackTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->stack = new Stack();
+        include_once __DIR__ . '/middleware/ServerMiddleware.php';
     }
 
     public function testStackLogic()
     {
-        $middleware = new \FastD\Middleware\ServerMiddleware(function (ServerRequestInterface $serverRequest, DelegateInterface $delegate) {
-            return 'hello world';
-        });
+        $middleware = new \ServerMiddleware();
 
         $this->stack->withMiddleware($middleware);
 

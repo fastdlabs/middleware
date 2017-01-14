@@ -19,21 +19,12 @@ use Psr\Http\Message\ResponseInterface;
  *
  * @package FastD\Middleware
  */
-class ClientMiddleware implements ClientMiddlewareInterface
+abstract class ClientMiddleware implements ClientMiddlewareInterface
 {
     /**
      * @var callable
      */
     protected $callback;
-
-    /**
-     * Middleware constructor.
-     * @param callable $callback
-     */
-    public function __construct(callable $callback)
-    {
-        $this->callback = $callback;
-    }
 
     /**
      * Process a client request and return a response.
@@ -50,7 +41,7 @@ class ClientMiddleware implements ClientMiddlewareInterface
     public function process(RequestInterface $request, DelegateInterface $next)
     {
         try {
-            $return = call_user_func_array($this->callback, [$request, $next]);
+            $return = call_user_func_array([$this, 'handle'], [$request, $next]);
 
             if ($return instanceof ResponseInterface) {
                 $response = $return;

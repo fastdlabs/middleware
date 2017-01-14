@@ -10,22 +10,20 @@
 
 use FastD\Middleware\Delegate;
 use FastD\Http\ServerRequest;
-use FastD\Middleware\ServerMiddleware;
 
 
 class MiddlewareTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        include_once __DIR__ . '/middleware/ServerMiddleware.php';
+    }
+
     public function testBaseMiddleware()
     {
-        $middleware = new ServerMiddleware(function (ServerRequest $request, Delegate $next) {
-            $response = $next($request);
+        $middleware = new ServerMiddleware();
 
-            $content = 'hello ' . $response;
-
-            echo $content;
-        });
-
-        $response = $middleware->process(new ServerRequest(), new Delegate(function (ServerRequest $request) {
+        $response = $middleware->process(new ServerRequest('GET', '/'), new Delegate(function (ServerRequest $request) {
             return 'world';
         }));
 

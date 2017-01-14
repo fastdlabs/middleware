@@ -20,6 +20,13 @@ use Psr\Http\Message\ResponseInterface;
 interface ClientMiddlewareInterface extends MiddlewareInterface
 {
     /**
+     * @param RequestInterface $request
+     * @param DelegateInterface $delegate
+     * @return ResponseInterface
+     */
+    public function handle(RequestInterface $request, DelegateInterface $delegate);
+
+    /**
      * Process a client request and return a response.
      *
      * Takes the incoming request and optionally modifies it before delegating

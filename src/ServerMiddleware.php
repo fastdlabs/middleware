@@ -18,21 +18,12 @@ use Psr\Http\Message\ServerRequestInterface;
  * Class ServerMiddleware
  * @package FastD\Middleware
  */
-class ServerMiddleware implements ServerMiddlewareInterface
+abstract class ServerMiddleware implements ServerMiddlewareInterface
 {
     /**
      * @var callable
      */
     protected $callback;
-
-    /**
-     * Middleware constructor.
-     * @param callable $callback
-     */
-    public function __construct(callable $callback)
-    {
-        $this->callback = $callback;
-    }
 
     /**
      * @param ServerRequestInterface $request
@@ -43,7 +34,7 @@ class ServerMiddleware implements ServerMiddlewareInterface
     public function process(ServerRequestInterface $request, DelegateInterface $next)
     {
         try {
-            $return = call_user_func_array($this->callback, [$request, $next]);
+            $return = call_user_func_array([$this, 'handle'], [$request, $next]);
 
             if ($return instanceof ResponseInterface) {
                 $response = $return;

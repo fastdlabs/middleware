@@ -39,6 +39,17 @@ class Dispatcher
     }
 
     /**
+     * @param ServerMiddlewareInterface $serverMiddleware
+     * @return $this
+     */
+    public function withAddMiddleware(ServerMiddlewareInterface $serverMiddleware)
+    {
+        $this->stack->withAddMiddleware($serverMiddleware);
+
+        return $this;
+    }
+
+    /**
      * @param ServerRequestInterface $request
      * @return ResponseInterface
      */

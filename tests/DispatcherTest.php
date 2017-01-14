@@ -10,20 +10,22 @@
 
 use FastD\Http\ServerRequest;
 use FastD\Middleware\Dispatcher;
-use FastD\Middleware\ServerMiddleware;
 
 
 class DispatcherTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        include_once __DIR__ . '/middleware/ServerMiddleware.php';
+    }
+
     public function testDispatcher()
     {
         $dispatcher = new Dispatcher([
-            new ServerMiddleware(function (ServerRequest $request, \FastD\Middleware\Delegate $delegate) {
-                echo 'hello world';
-            })
+            new \ServerMiddleware(),
         ]);
 
-        $dispatcher->dispatch(new ServerRequest());
+        $dispatcher->dispatch(new ServerRequest('GET', '/'));
 
         $this->expectOutputString('hello world');
     }
