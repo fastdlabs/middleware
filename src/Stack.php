@@ -78,6 +78,12 @@ class Stack implements StackInterface
      */
     public function withoutMiddleware(MiddlewareInterface $middleware)
     {
+        foreach ($this->middleware as $key => $value) {
+            if (spl_object_hash($value) == spl_object_hash($middleware)) {
+                unset($this->middleware[$key]);
+                break;
+            }
+        }
         $this->middleware[] = $middleware;
 
         return $this;
