@@ -1,12 +1,18 @@
 # middleware
 
-FastD Middleware
+[![Build Status](https://travis-ci.org/JanHuang/middleware.svg?branch=master)](https://travis-ci.org/JanHuang/middleware)
+[![Support PSR15](https://img.shields.io/badge/support-psr15-brightgreen.svg)](https://travis-ci.org/JanHuang/middleware)
+[![Latest Stable Version](https://poser.pugx.org/fastd/middleware/v/stable)](https://packagist.org/packages/fastd/middleware)
+[![License](https://poser.pugx.org/fastd/middleware/license)](https://packagist.org/packages/fastd/middleware)
+[![composer.lock](https://poser.pugx.org/fastd/middleware/composerlock)](https://packagist.org/packages/fastd/middleware)
 
-## requirement
+Http 中间件，实现PSR15
+
+### requirement
 
 * php >= 5.6
 
-## installation
+### installation
 
 ```
 composer require "fastd/middlware:1.0.x-dev" -vvv
@@ -29,4 +35,4 @@ $stack->withoutMiddleware($middleware2);
 $response = $stack->process(new ServerRequest());
 ```
 
-## License MIT
+### License MIT
