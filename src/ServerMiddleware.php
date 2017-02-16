@@ -11,6 +11,7 @@ namespace FastD\Middleware;
 
 
 use FastD\Http\Response;
+use FastD\Http\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -38,15 +39,10 @@ abstract class ServerMiddleware implements ServerMiddlewareInterface
 
             if ($return instanceof ResponseInterface) {
                 $response = $return;
-                $return = '';
+            } else if (is_array($return)) {
+                $response = new JsonResponse($return);
             } else {
-                $response = new Response();
-            }
-
-            $body = $response->getBody();
-
-            if (!empty($return) && $body->isWritable()) {
-                $body->write($return);
+                $response = new Response($return);
             }
 
             return $response;

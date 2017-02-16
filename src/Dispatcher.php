@@ -67,18 +67,6 @@ class Dispatcher
      */
     private function resolve($index)
     {
-        if (isset($this->stack[$index])) {
-            return new Delegate(function (ServerRequestInterface $request) use ($index) {
-                $middleware = $this->stack[$index];
-
-                $result = $middleware->process($request, $this->resolve($index + 1));
-
-                return $result;
-            });
-        }
-
-        return new Delegate(function () {
-            throw new LogicException('unresolved request: middleware stack exhausted with no result');
-        });
+        return $this->stack->resolve($index);
     }
 }
