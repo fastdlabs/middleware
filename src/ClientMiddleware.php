@@ -11,6 +11,7 @@ namespace FastD\Middleware;
 
 use Exception;
 use FastD\Http\Response;
+use FastD\Http\JsonResponse;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -45,15 +46,10 @@ abstract class ClientMiddleware implements ClientMiddlewareInterface
 
             if ($return instanceof ResponseInterface) {
                 $response = $return;
-                $return = '';
+            } else if (is_array($return)) {
+                $response = new JsonResponse($return);
             } else {
-                $response = new Response();
-            }
-
-            $body = $response->getBody();
-
-            if ($return !== '' && $body->isWritable()) {
-                $body->write($return);
+                $response = new Response($return);
             }
 
             return $response;

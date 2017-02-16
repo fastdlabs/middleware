@@ -112,19 +112,17 @@ class Stack implements StackInterface
      */
     public function resolve($index = 0)
     {
-        if (isset($this->middleware[$index])) {
-            return new Delegate(function (ServerRequestInterface $request) use ($index) {
-                $middleware = $this->middleware[$index];
-
-                $result = $middleware->process($request, $this->resolve($index + 1));
-
-                return $result;
-            });
-        }
-
-        return new Delegate(function () {
-            throw new LogicException('unresolved request: middleware stack exhausted with no result');
-        });
+        return array_reduce(
+            array_reverse(array_slice($this->middleware, $index)),
+            function(DelegateInterface $delegate, MiddlewareInterface $middleware) {
+                return new Delegate(function(ServerRequestInterface $request) use ($delegate, $middleware) {
+                    return $middleware->process($request, $delegate);
+                });
+            },
+            new Delegate(function() {
+                return null;
+            })
+        );
     }
 
     /**
