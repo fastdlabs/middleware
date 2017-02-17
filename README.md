@@ -28,11 +28,12 @@ $middleware2 = new Middleware(function (RequestInterface $request, DelegateInter
     echo 'world';
 });
 
-$stack = new Stack();
-$stack->withoutMiddleware($middleware);
-$stack->withoutMiddleware($middleware2);
+$dispatcher = new Dispatcher([
+    $middleware,
+    $middleware2
+]);
 
-$response = $stack->process(new ServerRequest());
+$response = $dispatcher->dispatch(new ServerRequest('GET', '/'));
 ```
 
 ### License MIT
