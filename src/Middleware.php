@@ -18,7 +18,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * Class ServerMiddleware
  * @package FastD\Middleware
  */
-abstract class ServerMiddleware implements ServerMiddlewareInterface
+abstract class Middleware implements MiddlewareInterface
 {
     /**
      * @var callable
@@ -28,7 +28,7 @@ abstract class ServerMiddleware implements ServerMiddlewareInterface
     /**
      * @param ServerRequestInterface $request
      * @param DelegateInterface $next
-     * @return Response|mixed|ResponseInterface
+     * @return mixed|ResponseInterface
      * @throws \Exception
      */
     public function process(ServerRequestInterface $request, DelegateInterface $next)

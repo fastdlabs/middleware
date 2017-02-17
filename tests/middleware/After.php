@@ -7,7 +7,7 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
-class Before extends \FastD\Middleware\Middleware
+class After extends \FastD\Middleware\Middleware
 {
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
@@ -16,11 +16,7 @@ class Before extends \FastD\Middleware\Middleware
      */
     public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $next)
     {
-        echo 'before' . PHP_EOL;
-        if ('/' == $request->getUri()->getPath()) {
-            return new \FastD\Http\Response('before');
-        }
-
-        return $next($request);
+        echo 'after';
+        return new \FastD\Http\Response('after');
     }
 }

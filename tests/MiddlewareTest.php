@@ -31,4 +31,16 @@ class MiddlewareTest extends PHPUnit_Framework_TestCase
         echo $response->getBody()->getContents();
         $this->expectOutputString('hello world');
     }
+
+    public function testBreakMiddleware()
+    {
+        $middleware = new ServerMiddleware();
+
+        $response = $middleware->process(new ServerRequest('GET', '/?foo=bar'), new Delegate(function (ServerRequest $request) {
+            return 'world';
+        }));
+
+        echo $response->getBody();
+        $this->expectOutputString('foo');
+    }
 }

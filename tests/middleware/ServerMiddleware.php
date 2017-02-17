@@ -7,15 +7,23 @@
  * @link      https://www.github.com/janhuang
  * @link      http://www.fast-d.cn/
  */
-class ServerMiddleware extends \FastD\Middleware\ServerMiddleware
+class ServerMiddleware extends \FastD\Middleware\Middleware
 {
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $serverRequest
-     * @param \FastD\Middleware\DelegateInterface $delegate
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \FastD\Middleware\DelegateInterface $next
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function handle(\Psr\Http\Message\ServerRequestInterface $serverRequest, \FastD\Middleware\DelegateInterface $delegate)
+    public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $next)
     {
-        echo 'hello world';
+        $query = $request->getQueryParams();
+
+        if (!empty($query)) {
+            return new \FastD\Http\Response('foo');
+        }
+
+        echo 'hello ';
+
+        return $next($request);
     }
 }

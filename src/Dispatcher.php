@@ -13,6 +13,7 @@ namespace FastD\Middleware;
 use LogicException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use SplStack;
 
 /**
  * Class Dispatcher
@@ -21,7 +22,7 @@ use Psr\Http\Message\ServerRequestInterface;
 class Dispatcher
 {
     /**
-     * @var Stack
+     * @var SplStack
      */
     protected $stack;
 
@@ -29,22 +30,22 @@ class Dispatcher
      * Dispatcher constructor.
      * @param $stack
      */
-    public function __construct($stack)
+    public function __construct(array $stack = [])
     {
-        if ($stack instanceof StackInterface) {
-            $this->stack = $stack;
-        } else {
-            $this->stack = new Stack($stack);
+        $this->stack = new SplStack();
+
+        foreach ($stack as $value) {
+            $this->withAddMiddleware($value);
         }
     }
 
     /**
-     * @param ServerMiddlewareInterface $serverMiddleware
+     * @param MiddlewareInterface $serverMiddleware
      * @return $this
      */
-    public function withAddMiddleware(ServerMiddlewareInterface $serverMiddleware)
+    public function withAddMiddleware(MiddlewareInterface $serverMiddleware)
     {
-        $this->stack->withAddMiddleware($serverMiddleware);
+        $this->stack->push($serverMiddleware);
 
         return $this;
     }
@@ -55,23 +56,21 @@ class Dispatcher
      */
     public function dispatch(ServerRequestInterface $request)
     {
-        $resolved = $this->resolve(0);
+        $resolved = $this->resolve();
 
         return $resolved($request);
     }
 
     /**
-     * @param int $index middleware stack index
-     *
      * @return DelegateInterface
      */
-    private function resolve($index)
+    private function resolve()
     {
-        if (isset($this->stack[$index])) {
-            return new Delegate(function (ServerRequestInterface $request) use ($index) {
-                $middleware = $this->stack[$index];
+        if (!$this->stack->isEmpty()) {
+            return new Delegate(function (ServerRequestInterface $request) {
+                $middleware = $this->stack->shift();
 
-                $result = $middleware->process($request, $this->resolve($index + 1));
+                $result = $middleware->process($request, $this->resolve());
 
                 return $result;
             });

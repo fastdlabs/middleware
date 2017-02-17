@@ -10,6 +10,9 @@
 namespace FastD\Middleware;
 
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
 /**
  * Interface MiddlewareInterface
  *
@@ -17,4 +20,17 @@ namespace FastD\Middleware;
  */
 interface MiddlewareInterface
 {
+    /**
+     * @param ServerRequestInterface $request
+     * @param DelegateInterface $next
+     * @return mixed|ResponseInterface
+     */
+    public function process(ServerRequestInterface $request, DelegateInterface $next);
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param DelegateInterface $next
+     * @return mixed|ResponseInterface
+     */
+    public function handle(ServerRequestInterface $request, DelegateInterface $next);
 }
