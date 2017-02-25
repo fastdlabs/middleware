@@ -38,7 +38,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
             new After()
         ]);
 
-        $response = $dispatcher->dispatch(new ServerRequest('GET', '/foo'));
+        $dispatcher->dispatch(new ServerRequest('GET', '/foo'));
         $this->expectOutputString(<<<EOF
 before
 after
