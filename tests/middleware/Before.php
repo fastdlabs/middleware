@@ -17,10 +17,11 @@ class Before extends \FastD\Middleware\Middleware
     public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $next)
     {
         echo 'before' . PHP_EOL;
+
         if ('/' == $request->getUri()->getPath()) {
             return new \FastD\Http\Response('before');
         }
 
-        return $next($request);
+        return $next->process($request);
     }
 }

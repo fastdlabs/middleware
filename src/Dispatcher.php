@@ -62,7 +62,7 @@ class Dispatcher
      */
     public function after(MiddlewareInterface $middleware)
     {
-        $this->stack->push($middleware);
+        $this->stack->unshift($middleware);
 
         return $this;
     }
@@ -73,7 +73,7 @@ class Dispatcher
      */
     public function before(MiddlewareInterface $middleware)
     {
-        $this->stack->unshift($middleware);
+        $this->stack->push($middleware);
 
         return $this;
     }

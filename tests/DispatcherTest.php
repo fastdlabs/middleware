@@ -39,11 +39,10 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         ]);
 
         $response = $dispatcher->dispatch(new ServerRequest('GET', '/foo'));
-        echo $response->getBody();
-//        $this->expectOutputString(<<<EOF
-//before
-//after
-//EOF
-//);
+        $this->expectOutputString(<<<EOF
+before
+after
+EOF
+);
     }
 }
