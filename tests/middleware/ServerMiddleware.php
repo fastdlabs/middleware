@@ -24,6 +24,6 @@ class ServerMiddleware extends \FastD\Middleware\Middleware
 
         echo 'hello ';
 
-        return $next($request);
+        return $next->process($request);
     }
 }

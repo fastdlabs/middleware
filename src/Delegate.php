@@ -38,17 +38,8 @@ class Delegate implements DelegateInterface
      *
      * @return mixed
      */
-    public function next(RequestInterface $request)
+    public function process(RequestInterface $request)
     {
         return call_user_func($this->callback, $request);
-    }
-
-    /**
-     * @param RequestInterface $request
-     * @return mixed
-     */
-    public function __invoke(RequestInterface $request)
-    {
-        return $this->next($request);
     }
 }

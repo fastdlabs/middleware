@@ -24,7 +24,7 @@ class MiddlewareTest extends PHPUnit_Framework_TestCase
         $middleware = new ServerMiddleware();
 
         $response = $middleware->process(new ServerRequest('GET', '/'), new Delegate(function (ServerRequest $request) {
-            return 'world';
+            return new \FastD\Http\Response('world');
         }));
 
         $response->getBody()->rewind();

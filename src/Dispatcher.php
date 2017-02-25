@@ -27,6 +27,11 @@ class Dispatcher
     protected $stack;
 
     /**
+     * @var ResponseInterface
+     */
+    protected $response;
+
+    /**
      * Dispatcher constructor.
      * @param $stack
      */
@@ -35,17 +40,40 @@ class Dispatcher
         $this->stack = new SplStack();
 
         foreach ($stack as $value) {
-            $this->withAddMiddleware($value);
+            $this->before($value);
         }
     }
 
     /**
-     * @param MiddlewareInterface $serverMiddleware
+     * @deprecated
+     * @param MiddlewareInterface $middleware
      * @return $this
      */
-    public function withAddMiddleware(MiddlewareInterface $serverMiddleware)
+    public function withAddMiddleware(MiddlewareInterface $middleware)
     {
-        $this->stack->push($serverMiddleware);
+        $this->stack->push($middleware);
+
+        return $this;
+    }
+
+    /**
+     * @param MiddlewareInterface $middleware
+     * @return $this
+     */
+    public function after(MiddlewareInterface $middleware)
+    {
+        $this->stack->push($middleware);
+
+        return $this;
+    }
+
+    /**
+     * @param MiddlewareInterface $middleware
+     * @return $this
+     */
+    public function before(MiddlewareInterface $middleware)
+    {
+        $this->stack->unshift($middleware);
 
         return $this;
     }
@@ -58,7 +86,7 @@ class Dispatcher
     {
         $resolved = $this->resolve();
 
-        return $resolved($request);
+        return $resolved->process($request);
     }
 
     /**
@@ -69,10 +97,9 @@ class Dispatcher
         if (!$this->stack->isEmpty()) {
             return new Delegate(function (ServerRequestInterface $request) {
                 $middleware = $this->stack->shift();
-
-                $result = $middleware->process($request, $this->resolve());
-
-                return $result;
+                $response = $middleware->process($request, $this->resolve());
+                unset($middleware);
+                return $response;
             });
         }
 

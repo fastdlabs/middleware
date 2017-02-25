@@ -10,7 +10,6 @@
 namespace FastD\Middleware;
 
 
-use FastD\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -34,13 +33,10 @@ abstract class Middleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, DelegateInterface $next)
     {
         try {
-            $return = call_user_func_array([$this, 'handle'], [$request, $next]);
+            $response = call_user_func_array([$this, 'handle'], [$request, $next]);
 
-            if ($return instanceof ResponseInterface) {
-                $response = $return;
-                $return = '';
-            } else {
-                $response = new Response();
+            if (!($response instanceof ResponseInterface)) {
+                throw new \RuntimeException('Middleware must be return Psr\Http\Message\ResponseInterface');
             }
 
             $body = $response->getBody();
@@ -53,15 +49,5 @@ abstract class Middleware implements MiddlewareInterface
         } catch (\Exception $exception) {
             throw $exception;
         }
-    }
-
-    /**
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $next
-     * @return ResponseInterface
-     */
-    public function __invoke(ServerRequestInterface $request, DelegateInterface $next)
-    {
-        return $this->process($request, $next);
     }
 }
