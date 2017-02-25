@@ -96,10 +96,7 @@ class Dispatcher
     {
         if (!$this->stack->isEmpty()) {
             return new Delegate(function (ServerRequestInterface $request) {
-                $middleware = $this->stack->shift();
-                $response = $middleware->process($request, $this->resolve());
-                unset($middleware);
-                return $response;
+                return $this->stack->shift()->process($request, $this->resolve());
             });
         }
 

@@ -11,6 +11,7 @@ namespace FastD\Middleware;
 
 
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Delegate
@@ -36,10 +37,19 @@ class Delegate implements DelegateInterface
      *
      * @param RequestInterface $request
      *
-     * @return mixed
+     * @return ResponseInterface
      */
     public function process(RequestInterface $request)
     {
         return call_user_func($this->callback, $request);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     */
+    public function __invoke(RequestInterface $request)
+    {
+        return $this->process($request);
     }
 }

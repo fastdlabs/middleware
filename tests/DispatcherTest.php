@@ -35,11 +35,13 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
     {
         $dispatcher = new Dispatcher([
             new Before(),
-            new After()
+            new Before(),
+            new After(),
         ]);
 
         $dispatcher->dispatch(new ServerRequest('GET', '/foo'));
         $this->expectOutputString(<<<EOF
+before
 before
 after
 EOF
