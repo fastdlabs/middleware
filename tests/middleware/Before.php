@@ -14,7 +14,7 @@ class Before extends \FastD\Middleware\Middleware
      * @param \FastD\Middleware\DelegateInterface $next
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $next)
+    public function process(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $next)
     {
         echo 'before' . PHP_EOL;
 

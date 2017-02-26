@@ -26,4 +26,10 @@ interface DelegateInterface
      * @return ResponseInterface
      */
     public function process(RequestInterface $request);
+
+    /**
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     */
+    public function __invoke(RequestInterface $request);
 }

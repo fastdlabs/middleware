@@ -23,14 +23,14 @@ interface MiddlewareInterface
     /**
      * @param ServerRequestInterface $request
      * @param DelegateInterface $next
-     * @return mixed|ResponseInterface
+     * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, DelegateInterface $next);
 
     /**
      * @param ServerRequestInterface $request
      * @param DelegateInterface $next
-     * @return mixed|ResponseInterface
+     * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request, DelegateInterface $next);
+    public function __invoke(ServerRequestInterface $request, DelegateInterface $next);
 }
