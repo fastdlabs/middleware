@@ -15,7 +15,7 @@ Http 中间件，实现PSR15
 ### installation
 
 ```
-composer require "fastd/middlware:1.0.x-dev" -vvv
+composer require "fastd/middlware" -vvv
 ```
 
 ```php

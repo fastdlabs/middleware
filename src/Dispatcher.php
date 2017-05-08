@@ -27,11 +27,6 @@ class Dispatcher
     protected $stack;
 
     /**
-     * @var ResponseInterface
-     */
-    protected $response;
-
-    /**
      * Dispatcher constructor.
      * @param $stack
      */
@@ -45,7 +40,7 @@ class Dispatcher
     }
 
     /**
-     * @deprecated
+     * @deprecated remove the 2.0
      * @param MiddlewareInterface $middleware
      * @return $this
      */
