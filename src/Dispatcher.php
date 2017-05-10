@@ -79,9 +79,7 @@ class Dispatcher
      */
     public function dispatch(ServerRequestInterface $request)
     {
-        $resolved = $this->resolve();
-
-        return $resolved->process($request);
+        return $this->resolve()->process($request);
     }
 
     /**

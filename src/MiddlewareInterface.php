@@ -26,11 +26,4 @@ interface MiddlewareInterface
      * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request, DelegateInterface $next);
-
-    /**
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $next
-     * @return ResponseInterface
-     */
-    public function __invoke(ServerRequestInterface $request, DelegateInterface $next);
 }
