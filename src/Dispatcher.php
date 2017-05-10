@@ -89,14 +89,16 @@ class Dispatcher
      */
     private function resolve()
     {
-        if (!$this->stack->isEmpty()) {
-            return new Delegate(function (ServerRequestInterface $request) {
-                return $this->stack->shift()->process($request, $this->resolve());
-            });
-        }
-
-        return new Delegate(function () {
-            throw new LogicException('unresolved request: middleware stack exhausted with no result');
-        });
+        return $this->stack->isEmpty() ?
+            new Delegate(
+                function () {
+                    throw new LogicException('unresolved request: middleware stack exhausted with no result');
+                }
+            ) :
+            new Delegate(
+                function (ServerRequestInterface $request) {
+                    return $this->stack->shift()->process($request, $this->resolve());
+                }
+            );
     }
 }
