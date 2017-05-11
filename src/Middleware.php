@@ -9,6 +9,9 @@
 
 namespace FastD\Middleware;
 
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
 
 /**
  * Class ServerMiddleware
@@ -16,4 +19,20 @@ namespace FastD\Middleware;
  */
 abstract class Middleware implements MiddlewareInterface
 {
+    /**
+     * @param ServerRequestInterface $request
+     * @param DelegateInterface $next
+     * @return ResponseInterface
+     */
+    abstract public function handle(ServerRequestInterface $request, DelegateInterface $next);
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param DelegateInterface $next
+     * @return ResponseInterface
+     */
+    public function process(ServerRequestInterface $request, DelegateInterface $next)
+    {
+        return $this->handle($request, $next);
+    }
 }
