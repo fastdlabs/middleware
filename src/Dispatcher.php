@@ -32,21 +32,11 @@ class Dispatcher
      */
     public function __construct(array $stack = [])
     {
-        $this->initStack();
+        $this->stack = new SplStack();
 
         foreach ($stack as $value) {
             $this->before($value);
         }
-    }
-
-    /**
-     * @return $this
-     */
-    protected function initStack()
-    {
-        $this->stack = new SplStack();
-
-        return $this;
     }
 
     /**
@@ -90,8 +80,8 @@ class Dispatcher
     public function dispatch(ServerRequestInterface $request)
     {
         $response = $this->resolve()->process($request);
-
-        $this->initStack();
+        // reset middleware stack
+        $this->stack = new SplStack();
 
         return $response;
     }
