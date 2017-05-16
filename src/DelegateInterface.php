@@ -20,6 +20,12 @@ use Psr\Http\Message\ResponseInterface;
 interface DelegateInterface
 {
     /**
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     */
+    public function next(RequestInterface $request);
+
+    /**
      * Dispatch the next available middleware and return the response.
      *
      * @param RequestInterface $request

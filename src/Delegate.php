@@ -52,4 +52,13 @@ class Delegate implements DelegateInterface
     {
         return $this->process($request);
     }
+
+    /**
+     * @param RequestInterface $request
+     * @return ResponseInterface
+     */
+    public function next(RequestInterface $request)
+    {
+        return $this->process($request);
+    }
 }
