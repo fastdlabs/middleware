@@ -80,8 +80,6 @@ class Dispatcher
     public function dispatch(ServerRequestInterface $request)
     {
         $response = $this->resolve()->process($request);
-        // reset middleware stack
-        $this->stack = new SplStack();
 
         return $response;
     }
@@ -99,7 +97,11 @@ class Dispatcher
             ) :
             new Delegate(
                 function (ServerRequestInterface $request) {
-                    return $this->stack->shift()->process($request, $this->resolve());
+                    $middleware = $this->stack->shift();
+                    $response = $middleware->process($request, $this->resolve());
+                    $middleware->withResponse($response);
+
+                    return $response;
                 }
             );
     }

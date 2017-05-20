@@ -22,6 +22,6 @@ class Before extends \FastD\Middleware\Middleware
             return new \FastD\Http\Response('before');
         }
 
-        return $next->process($request);
+        return $next($request);
     }
 }
