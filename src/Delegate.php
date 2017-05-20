@@ -43,13 +43,4 @@ class Delegate implements DelegateInterface
     {
         return call_user_func($this->callback, $request);
     }
-
-    /**
-     * @param RequestInterface $request
-     * @return ResponseInterface
-     */
-    public function __invoke(RequestInterface $request)
-    {
-        return $this->process($request);
-    }
 }

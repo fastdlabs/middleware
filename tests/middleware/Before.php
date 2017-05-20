@@ -11,10 +11,10 @@ class Before extends \FastD\Middleware\Middleware
 {
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \FastD\Middleware\DelegateInterface $next
+     * @param \FastD\Middleware\DelegateInterface $delegate
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $next)
+    public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $delegate)
     {
         echo 'before' . PHP_EOL;
 
@@ -22,6 +22,6 @@ class Before extends \FastD\Middleware\Middleware
             return new \FastD\Http\Response('before');
         }
 
-        return $next($request);
+        return $delegate->process($request);
     }
 }

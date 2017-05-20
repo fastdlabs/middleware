@@ -11,10 +11,10 @@ class ServerMiddleware extends \FastD\Middleware\Middleware
 {
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \FastD\Middleware\DelegateInterface $next
+     * @param \FastD\Middleware\DelegateInterface $delegate
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $next)
+    public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $delegate)
     {
         $query = $request->getQueryParams();
 
@@ -24,6 +24,6 @@ class ServerMiddleware extends \FastD\Middleware\Middleware
 
         echo 'hello ';
 
-        return $next->process($request);
+        return $delegate->process($request);
     }
 }
