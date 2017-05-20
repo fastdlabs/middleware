@@ -35,27 +35,15 @@ class Dispatcher
         $this->stack = new SplStack();
 
         foreach ($stack as $value) {
-            $this->before($value);
+            $this->push($value);
         }
     }
 
     /**
-     * @deprecated remove the 2.0
      * @param MiddlewareInterface $middleware
      * @return $this
      */
-    public function withAddMiddleware(MiddlewareInterface $middleware)
-    {
-        $this->stack->push($middleware);
-
-        return $this;
-    }
-
-    /**
-     * @param MiddlewareInterface $middleware
-     * @return $this
-     */
-    public function after(MiddlewareInterface $middleware)
+    public function unshift(MiddlewareInterface $middleware)
     {
         $this->stack->unshift($middleware);
 
@@ -66,7 +54,7 @@ class Dispatcher
      * @param MiddlewareInterface $middleware
      * @return $this
      */
-    public function before(MiddlewareInterface $middleware)
+    public function push(MiddlewareInterface $middleware)
     {
         $this->stack->push($middleware);
 
@@ -97,11 +85,7 @@ class Dispatcher
             ) :
             new Delegate(
                 function (ServerRequestInterface $request) {
-                    $middleware = $this->stack->shift();
-                    $response = $middleware->process($request, $this->resolve());
-                    $middleware->withResponse($response);
-
-                    return $response;
+                    return $this->stack->shift()->process($request, $this->resolve());
                 }
             );
     }
