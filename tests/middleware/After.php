@@ -17,6 +17,6 @@ class After extends \FastD\Middleware\Middleware
     public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $delegate)
     {
         echo 'after';
-        return new \FastD\Http\Response('after');
+        return (new \FastD\Http\Response())->withContent('after');
     }
 }

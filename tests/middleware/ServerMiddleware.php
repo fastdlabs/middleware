@@ -19,7 +19,7 @@ class ServerMiddleware extends \FastD\Middleware\Middleware
         $query = $request->getQueryParams();
 
         if (!empty($query)) {
-            return new \FastD\Http\Response('foo');
+            return (new \FastD\Http\Response())->withContent('foo');
         }
 
         echo 'hello ';

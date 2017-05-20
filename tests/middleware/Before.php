@@ -19,7 +19,7 @@ class Before extends \FastD\Middleware\Middleware
         echo 'before' . PHP_EOL;
 
         if ('/' == $request->getUri()->getPath()) {
-            return new \FastD\Http\Response('before');
+            return (new \FastD\Http\Response())->withContent('before');
         }
 
         return $delegate->process($request);
