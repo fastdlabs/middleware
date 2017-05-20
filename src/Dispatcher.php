@@ -69,6 +69,8 @@ class Dispatcher
     {
         $response = $this->resolve()->process($request);
 
+        $this->stack = new SplStack();
+
         return $response;
     }
 
