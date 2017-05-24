@@ -1,4 +1,7 @@
 <?php
+use FastD\Middleware\DelegateInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
@@ -10,11 +13,11 @@
 class Before extends \FastD\Middleware\Middleware
 {
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \FastD\Middleware\DelegateInterface $delegate
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param ServerRequestInterface $request
+     * @param DelegateInterface $delegate
+     * @return ResponseInterface
      */
-    public function handle(\Psr\Http\Message\ServerRequestInterface $request, \FastD\Middleware\DelegateInterface $delegate)
+    public function handle(ServerRequestInterface $request, DelegateInterface $delegate): ResponseInterface
     {
         echo 'before' . PHP_EOL;
 
