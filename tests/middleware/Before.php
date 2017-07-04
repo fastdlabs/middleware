@@ -17,7 +17,7 @@ class Before extends \FastD\Middleware\Middleware
      * @param DelegateInterface $delegate
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request, DelegateInterface $delegate): ResponseInterface
+    public function handle(ServerRequestInterface $request, DelegateInterface $delegate)
     {
         echo 'before' . PHP_EOL;
 

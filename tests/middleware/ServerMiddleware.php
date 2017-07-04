@@ -17,7 +17,7 @@ class ServerMiddleware extends \FastD\Middleware\Middleware
      * @param DelegateInterface $delegate
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request, DelegateInterface $delegate): ResponseInterface
+    public function handle(ServerRequestInterface $request, DelegateInterface $delegate)
     {
         $query = $request->getQueryParams();
 

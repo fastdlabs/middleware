@@ -25,5 +25,5 @@ interface MiddlewareInterface
      * @param DelegateInterface $next
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, DelegateInterface $next): ResponseInterface;
+    public function process(ServerRequestInterface $request, DelegateInterface $next);
 }
