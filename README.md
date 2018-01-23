@@ -1,6 +1,6 @@
 # middleware
 
-[![Build Status](https://travis-ci.org/fastdlabs/middleware.svg?branch=v1.0.0-rc1)](https://travis-ci.org/fastdlabs/middleware)
+[![Build Status](https://travis-ci.org/fastdlabs/middleware.svg?branch=master)](https://travis-ci.org/fastdlabs/middleware)
 [![Support PSR15](https://img.shields.io/badge/support-psr15-brightgreen.svg)](https://travis-ci.org/fastdlabs/middleware)
 [![Latest Stable Version](https://poser.pugx.org/fastd/middleware/v/stable)](https://packagist.org/packages/fastd/middleware)
 [![Total Downloads](https://poser.pugx.org/fastd/middleware/downloads)](https://packagist.org/packages/fastd/middleware)
