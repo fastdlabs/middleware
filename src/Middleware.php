@@ -19,13 +19,4 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 abstract class Middleware implements MiddlewareInterface
 {
-    /**
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
-     * @return ResponseInterface
-     */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
-    {
-        return $this->handle($request, $delegate);
-    }
 }
