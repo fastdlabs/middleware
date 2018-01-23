@@ -35,7 +35,7 @@ class Dispatcher
         $this->stack = new SplStack();
 
         foreach ($stack as $value) {
-            $this->push($value);
+            $this->before($value);
         }
     }
 
@@ -43,7 +43,7 @@ class Dispatcher
      * @param MiddlewareInterface $middleware
      * @return Dispatcher
      */
-    public function before(MiddlewareInterface $middleware)
+    public function after(MiddlewareInterface $middleware)
     {
         $this->stack->unshift($middleware);
 
@@ -54,7 +54,7 @@ class Dispatcher
      * @param MiddlewareInterface $middleware
      * @return Dispatcher
      */
-    public function push(MiddlewareInterface $middleware)
+    public function before(MiddlewareInterface $middleware)
     {
         $this->stack->push($middleware);
 
