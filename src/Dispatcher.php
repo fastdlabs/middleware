@@ -87,7 +87,7 @@ class Dispatcher
             ) :
             new Delegate(
                 function (ServerRequestInterface $request) {
-                    return $this->stack->shift()->process($request, $this->resolve());
+                    return $this->stack->shift()->handle($request, $this->resolve());
                 }
             );
     }

@@ -16,7 +16,7 @@ class MiddlewareTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        include_once __DIR__ . '/middleware/ServerMiddleware.php';
+        include_once __DIR__.'/middleware/ServerMiddleware.php';
     }
 
     public function testBaseMiddleware()
@@ -36,9 +36,10 @@ class MiddlewareTest extends PHPUnit_Framework_TestCase
     {
         $middleware = new ServerMiddleware();
 
-        $response = $middleware->process(new ServerRequest('GET', '/?foo=bar'), new Delegate(function (ServerRequest $request) {
-            return (new \FastD\Http\Response())->withContent('world');
-        }));
+        $response = $middleware->process(new ServerRequest('GET', '/?foo=bar'),
+            new Delegate(function (ServerRequest $request) {
+                return (new \FastD\Http\Response())->withContent('world');
+            }));
 
         echo $response->getBody();
         $this->expectOutputString('foo');

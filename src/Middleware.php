@@ -24,13 +24,6 @@ abstract class Middleware implements MiddlewareInterface
      * @param DelegateInterface $delegate
      * @return ResponseInterface
      */
-    abstract public function handle(ServerRequestInterface $request, DelegateInterface $delegate);
-
-    /**
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate)
     {
         return $this->handle($request, $delegate);
