@@ -43,7 +43,7 @@ class Dispatcher
      * @param MiddlewareInterface $middleware
      * @return Dispatcher
      */
-    public function unshift(MiddlewareInterface $middleware)
+    public function before(MiddlewareInterface $middleware)
     {
         $this->stack->unshift($middleware);
 
