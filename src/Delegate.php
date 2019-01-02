@@ -39,7 +39,7 @@ class Delegate implements DelegateInterface
      *
      * @return ResponseInterface
      */
-    public function process(RequestInterface $request)
+    public function process(RequestInterface $request): ResponseInterface
     {
         return call_user_func($this->callback, $request);
     }

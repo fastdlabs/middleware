@@ -43,7 +43,7 @@ class Dispatcher
      * @param MiddlewareInterface $middleware
      * @return Dispatcher
      */
-    public function after(MiddlewareInterface $middleware)
+    public function after(MiddlewareInterface $middleware): Dispatcher
     {
         $this->stack->unshift($middleware);
 
@@ -54,7 +54,7 @@ class Dispatcher
      * @param MiddlewareInterface $middleware
      * @return Dispatcher
      */
-    public function before(MiddlewareInterface $middleware)
+    public function before(MiddlewareInterface $middleware): Dispatcher
     {
         $this->stack->push($middleware);
 
@@ -65,7 +65,7 @@ class Dispatcher
      * @param ServerRequestInterface $request
      * @return ResponseInterface
      */
-    public function dispatch(ServerRequestInterface $request)
+    public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
         $response = $this->resolve()->process($request);
 
@@ -77,7 +77,7 @@ class Dispatcher
     /**
      * @return DelegateInterface
      */
-    private function resolve()
+    private function resolve(): DelegateInterface
     {
         return $this->stack->isEmpty() ?
             new Delegate(

@@ -25,5 +25,5 @@ interface MiddlewareInterface
      * @param DelegateInterface $next
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request, DelegateInterface $next);
+    public function handle(ServerRequestInterface $request, DelegateInterface $next): ResponseInterface;
 }
