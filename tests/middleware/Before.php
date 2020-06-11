@@ -5,10 +5,10 @@ use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
- * @copyright 2016
+ * @copyright 2020
  *
- * @link      https://www.github.com/janhuang
- * @link      http://www.fast-d.cn/
+ * @link      https://www.github.com/fastdlabs
+ * @link      https://www.fastdlabs.com/
  */
 class Before extends \FastD\Middleware\Middleware
 {
