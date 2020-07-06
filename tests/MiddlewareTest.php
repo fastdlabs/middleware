@@ -12,7 +12,7 @@ use FastD\Middleware\Delegate;
 use FastD\Http\ServerRequest;
 
 
-class MiddlewareTest extends PHPUnit_Framework_TestCase
+class MiddlewareTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

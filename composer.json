@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "fastd/http": "5.0.x-dev"
     },
     "require-dev": {
@@ -18,5 +18,8 @@
         "psr-4": {
             "FastD\\Middleware\\": "src"
         }
+    },
+    "config": {
+        "bin-dir": "bin"
     }
 }

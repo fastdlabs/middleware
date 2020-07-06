@@ -12,7 +12,7 @@ use FastD\Http\ServerRequest;
 use FastD\Middleware\Dispatcher;
 
 
-class DispatcherTest extends PHPUnit_Framework_TestCase
+class DispatcherTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {

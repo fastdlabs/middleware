@@ -24,7 +24,7 @@ class Dispatcher
     /**
      * @var SplStack
      */
-    protected $stack;
+    protected SplStack $stack;
 
     /**
      * Dispatcher constructor.
