@@ -9,7 +9,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "fastd/http": "5.0.x-dev"
+        "fastd/http": "dev-develop"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0"
