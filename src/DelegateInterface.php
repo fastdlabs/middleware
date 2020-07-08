@@ -25,5 +25,5 @@ interface DelegateInterface
      * @param RequestInterface $request
      * @return ResponseInterface
      */
-    public function process(RequestInterface $request): ResponseInterface;
+    public function handle(RequestInterface $request): ResponseInterface;
 }
