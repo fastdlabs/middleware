@@ -67,7 +67,7 @@ class Dispatcher
      */
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $this->resolve()->process($request);
+        $response = $this->resolve()->handle($request);
 
         $this->stack = new SplStack();
 
