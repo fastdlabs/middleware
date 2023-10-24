@@ -8,23 +8,20 @@
  */
 
 
-use FastD\Middleware\Delegate;
+use FastD\Http\Response;
 use FastD\Http\ServerRequest;
+use FastD\Middleware\RequestHandler;
+use tests\middleware\ServerMiddleware;
 
 
 class MiddlewareTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
-    {
-        include_once __DIR__.'/middleware/ServerMiddleware.php';
-    }
-
     public function testBaseMiddleware()
     {
         $middleware = new ServerMiddleware();
 
-        $response = $middleware->handle(new ServerRequest('GET', '/'), new Delegate(function (ServerRequest $request) {
-            return (new \FastD\Http\Response())->withContent('world');
+        $response = $middleware->process(new ServerRequest('GET', '/'), new RequestHandler(function (ServerRequest $request) {
+            return new Response('hello world');
         }));
 
         $response->getBody()->rewind();
@@ -36,9 +33,9 @@ class MiddlewareTest extends \PHPUnit\Framework\TestCase
     {
         $middleware = new ServerMiddleware();
 
-        $response = $middleware->handle(new ServerRequest('GET', '/?foo=bar'),
-            new Delegate(function (ServerRequest $request) {
-                return (new \FastD\Http\Response())->withContent('world');
+        $response = $middleware->process(new ServerRequest('GET', '/?foo=bar'),
+            new RequestHandler(function (ServerRequest $request) {
+                return (new Response())->withContent('world');
             }));
 
         echo $response->getBody();

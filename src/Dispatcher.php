@@ -14,6 +14,8 @@ namespace FastD\Middleware;
 use LogicException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use SplStack;
 
 /**
@@ -29,14 +31,14 @@ class Dispatcher
 
     /**
      * Dispatcher constructor.
-     * @param $stack
+     * @param array $stack
      */
     public function __construct(array $stack = [])
     {
         $this->stack = new SplStack();
 
         foreach ($stack as $value) {
-            $this->before($value);
+            $this->push($value);
         }
     }
 
@@ -44,7 +46,7 @@ class Dispatcher
      * @param MiddlewareInterface $middleware
      * @return Dispatcher
      */
-    public function after(MiddlewareInterface $middleware): Dispatcher
+    public function unshift(MiddlewareInterface $middleware): Dispatcher
     {
         $this->stack->unshift($middleware);
 
@@ -52,10 +54,18 @@ class Dispatcher
     }
 
     /**
+     * @return MiddlewareInterface
+     */
+    public function shift(): MiddlewareInterface
+    {
+        return $this->stack->shift();
+    }
+
+    /**
      * @param MiddlewareInterface $middleware
      * @return Dispatcher
      */
-    public function before(MiddlewareInterface $middleware): Dispatcher
+    public function push(MiddlewareInterface $middleware): Dispatcher
     {
         $this->stack->push($middleware);
 
@@ -63,12 +73,20 @@ class Dispatcher
     }
 
     /**
-     * @param ServerRequestInterface $request
+     * @return MiddlewareInterface
+     */
+    public function pop(): MiddlewareInterface
+    {
+        return $this->stack->pop();
+    }
+
+    /**
+     * @param ServerRequestInterface $requestHandler
      * @return ResponseInterface
      */
-    public function dispatch(ServerRequestInterface $request): ResponseInterface
+    public function dispatch(ServerRequestInterface $requestHandler): ResponseInterface
     {
-        $response = $this->resolve()->handle($request);
+        $response = $this->resolve()->handle($requestHandler);
 
         $this->stack = new SplStack();
 
@@ -76,19 +94,19 @@ class Dispatcher
     }
 
     /**
-     * @return DelegateInterface
+     * @return RequestHandlerInterface
      */
-    private function resolve(): DelegateInterface
+    private function resolve(): RequestHandlerInterface
     {
         return $this->stack->isEmpty() ?
-            new Delegate(
+            new RequestHandler(
                 function () {
                     throw new LogicException('unresolved request: middleware stack exhausted with no result');
                 }
             ) :
-            new Delegate(
+            new RequestHandler(
                 function (ServerRequestInterface $request) {
-                    return $this->stack->shift()->handle($request, $this->resolve());
+                    return $this->stack->shift()->process($request, $this->resolve());
                 }
             );
     }

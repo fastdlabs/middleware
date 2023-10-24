@@ -1,7 +1,11 @@
 <?php
-use FastD\Middleware\DelegateInterface;
+namespace tests\middleware;
+
+use FastD\Http\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * @author    jan huang <bboyjanhuang@gmail.com>
@@ -10,16 +14,16 @@ use Psr\Http\Message\ServerRequestInterface;
  * @link      https://www.github.com/fastdlabs
  * @link      https://www.fastdlabs.com/
  */
-class After extends \FastD\Middleware\Middleware
+class After implements MiddlewareInterface
 {
     /**
      * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
+     * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function handle(ServerRequestInterface $request, DelegateInterface $delegate): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         echo 'after';
-        return (new \FastD\Http\Response())->withContent('after');
+        return new Response('ending request handler');
     }
 }

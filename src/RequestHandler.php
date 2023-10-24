@@ -13,12 +13,14 @@ namespace FastD\Middleware;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Class Delegate
  * @package FastD\Middleware
  */
-class Delegate implements DelegateInterface
+class RequestHandler implements RequestHandlerInterface
 {
     /**
      * @var callable
@@ -36,12 +38,12 @@ class Delegate implements DelegateInterface
     /**
      * Dispatch the next available middleware and return the response.
      *
-     * @param RequestInterface $request
+     * @param ServerRequestInterface $serverRequest
      *
      * @return ResponseInterface
      */
-    public function handle(RequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $serverRequest): ResponseInterface
     {
-        return call_user_func($this->callback, $request);
+        return call_user_func($this->callback, $serverRequest);
     }
 }

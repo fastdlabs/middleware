@@ -9,42 +9,34 @@
 
 
 use FastD\Http\ServerRequest;
+use FastD\Http\Stream;
 use FastD\Middleware\Dispatcher;
+use tests\middleware\After;
+use tests\middleware\Before;
 
 
 class DispatcherTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
-    {
-        include_once __DIR__ . '/middleware/Before.php';
-        include_once __DIR__ . '/middleware/After.php';
-    }
-
     public function testDispatcher()
     {
-        $dispatcher = new Dispatcher([
-            new Before(),
-        ]);
+        $dispatcher = new Dispatcher();
+        $dispatcher->push(new After());
 
-        $dispatcher->dispatch(new ServerRequest('GET', '/'));
+        $res = $dispatcher->dispatch(new ServerRequest('GET', '/'));
 
-        $this->expectOutputString('before' . PHP_EOL);
+        $this->expectOutputString('after');
+        $this->assertEquals('ending request handler', $res->getContents());
     }
 
     public function testDispatcherSequence()
     {
-        $dispatcher = new Dispatcher([
-            new Before(),
-            new Before(),
-            new After(),
-        ]);
+        $dispatcher = new Dispatcher();
+        $dispatcher->push(new Before()); // 先执行，底层运用队列，先进先出
+        $dispatcher->push(new After()); // 后执行
 
-        $dispatcher->dispatch(new ServerRequest('GET', '/foo'));
-        $this->expectOutputString(<<<EOF
-before
-before
-after
-EOF
-);
+        $res = $dispatcher->dispatch(new ServerRequest('GET', '/foo'));
+//        echo $res->getBody()->getContents();
+        $this->expectOutputString('beforeafter');
+        $this->assertEquals('ending request handler', $res->getContents());
     }
 }
