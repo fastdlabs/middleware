@@ -2,6 +2,7 @@
 namespace tests\middleware;
 
 use FastD\Http\Response;
+use FastD\Middleware\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -14,7 +15,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  * @link      https://www.github.com/fastdlabs
  * @link      https://www.fastdlabs.com/
  */
-class Before implements MiddlewareInterface
+class Before extends Middleware
 {
     /**
      * @param ServerRequestInterface $request
