@@ -11,7 +11,7 @@ Http 中间件，实现PSR15
 
 ### requirement
 
-* php >= 5.6
+* php >= 7.4 || ^8.0
 
 ### installation
 
