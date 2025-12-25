@@ -19,8 +19,8 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
 {
     public function testDispatcher()
     {
-        $dispatcher = new Dispatcher();
-        $dispatcher->push(new After());
+        $dispatcher = new Dispatcher(stack: [new After()]);
+//        $dispatcher->push();
 
         $res = $dispatcher->dispatch(new ServerRequest('GET', '/'));
 
