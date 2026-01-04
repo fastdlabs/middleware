@@ -62,12 +62,12 @@ class Dispatcher
     }
 
     /**
-     * @param ServerRequestInterface $requestHandler
+     * @param ServerRequestInterface $serverRequest
      * @return ResponseInterface
      */
-    public function dispatch(ServerRequestInterface $requestHandler): ResponseInterface
+    public function dispatch(ServerRequestInterface $serverRequest): ResponseInterface
     {
-        $response = $this->resolve()->handle($requestHandler);
+        $response = $this->resolve()->handle($serverRequest);
 
         $this->splStack = new SplStack();
 
