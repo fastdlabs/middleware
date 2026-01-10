@@ -11,10 +11,6 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use SplStack;
 
-/**
- * Class Dispatcher
- * @package FastD\Middleware
- */
 class Dispatcher
 {
     public function __construct(array $stack = [], protected SplStack $splStack = new SplStack())
@@ -81,15 +77,7 @@ class Dispatcher
     private function resolve(): RequestHandlerInterface
     {
         return $this->splStack->isEmpty() ?
-            new RequestHandler(
-                function () {
-                    throw new LogicException('unresolved request: middleware stack exhausted with no result');
-                }
-            ) :
-            new RequestHandler(
-                function (ServerRequestInterface $request) {
-                    return $this->splStack->shift()->process($request, $this->resolve());
-                }
-            );
+            new RequestHandler(fn () => throw new LogicException('unresolved request: middleware stack exhausted with no result'))
+            : new RequestHandler(fn (ServerRequestInterface $request) => $this->splStack->shift()->process($request, $this->resolve()));
     }
 }

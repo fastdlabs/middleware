@@ -10,10 +10,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * Class Delegate
- * @package FastD\Middleware
- */
 class RequestHandler implements RequestHandlerInterface
 {
     public function __construct(protected Closure $callback)
