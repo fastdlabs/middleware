@@ -17,11 +17,6 @@
         "phpunit/phpunit": "^10.0",
         "phpstan/phpstan": "^1.0"
     },
-    "repositories": [{
-        "type": "path",
-        "url": "/Users/janhuang/PhpstormProjects/fastd/http"
-    }
-    ],
     "autoload": {
         "psr-4": {
             "FastD\\Middleware\\": "src"
