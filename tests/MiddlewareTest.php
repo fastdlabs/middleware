@@ -1,17 +1,10 @@
 <?php
-/**
- * @author    jan huang <bboyjanhuang@gmail.com>
- * @copyright 2020
- *
- * @link      https://www.github.com/fastdlabs
- * @link      https://www.fastdlabs.com/
- */
 
 
 use FastD\Http\Response\Text as Response;
 use FastD\Http\Request\ServerRequest;
 use FastD\Middleware\RequestHandler;
-use tests\middleware\ServerMiddleware;
+use Tests\Middleware\ServerMiddleware;
 
 
 class MiddlewareTest extends \PHPUnit\Framework\TestCase

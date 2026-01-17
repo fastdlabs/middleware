@@ -1,15 +1,14 @@
 <?php
 
 use FastD\Middleware\Dispatcher;
-use tests\middleware\After;
-use tests\middleware\Before;
-use tests\middleware\FinalHandler;
+use Tests\Middleware\AfterMiddleware;
+use Tests\Middleware\BeforeMiddleware;
 
 class InternalStateTest extends \PHPUnit\Framework\TestCase
 {
     public function testSplStackIsResetAfterDispatch()
     {
-        $dispatcher = new Dispatcher([new After()]);
+        $dispatcher = new Dispatcher([new AfterMiddleware()]);
         $initialStackSize = $this->getStackSize($dispatcher);
         
         // Dispatch should process the stack and then reset it
@@ -24,12 +23,12 @@ class InternalStateTest extends \PHPUnit\Framework\TestCase
     public function testMultipleDispatches()
     {
         // Test first dispatch
-        $dispatcher1 = new Dispatcher([new Before(), new After()]);
+        $dispatcher1 = new Dispatcher([new BeforeMiddleware(), new AfterMiddleware()]);
         $response1 = $dispatcher1->dispatch(new \FastD\Http\Request\ServerRequest('GET', '/'));
         $this->assertEquals('before after ending request handler', $response1->getContents());
         
         // Test second dispatch with a new instance (since dispatch clears the stack)
-        $dispatcher2 = new Dispatcher([new Before(), new After()]);
+        $dispatcher2 = new Dispatcher([new BeforeMiddleware(), new AfterMiddleware()]);
         $response2 = $dispatcher2->dispatch(new \FastD\Http\Request\ServerRequest('GET', '/'));
         $this->assertEquals('before after ending request handler', $response2->getContents());
     }

@@ -14,8 +14,14 @@
         "psr/http-server-middleware": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^10.0",
+        "phpstan/phpstan": "^1.0"
     },
+    "repositories": [{
+        "type": "path",
+        "url": "/Users/janhuang/PhpstormProjects/fastd/http"
+    }
+    ],
     "autoload": {
         "psr-4": {
             "FastD\\Middleware\\": "src"
@@ -23,7 +29,11 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "tests\\middleware\\": "tests/middleware"
+            "Tests\\": "tests"
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage/"
     }
 }

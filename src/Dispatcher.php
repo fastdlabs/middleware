@@ -20,10 +20,6 @@ class Dispatcher
         }
     }
 
-    /**
-     * @param MiddlewareInterface $middleware
-     * @return Dispatcher
-     */
     public function unshift(MiddlewareInterface $middleware): Dispatcher
     {
         $this->splStack->unshift($middleware);
@@ -31,18 +27,11 @@ class Dispatcher
         return $this;
     }
 
-    /**
-     * @return MiddlewareInterface
-     */
     public function shift(): MiddlewareInterface
     {
         return $this->splStack->shift();
     }
 
-    /**
-     * @param MiddlewareInterface $middleware
-     * @return Dispatcher
-     */
     public function push(MiddlewareInterface $middleware): Dispatcher
     {
         $this->splStack->push($middleware);
@@ -50,18 +39,11 @@ class Dispatcher
         return $this;
     }
 
-    /**
-     * @return MiddlewareInterface
-     */
     public function pop(): MiddlewareInterface
     {
         return $this->splStack->pop();
     }
 
-    /**
-     * @param ServerRequestInterface $serverRequest
-     * @return ResponseInterface
-     */
     public function dispatch(ServerRequestInterface $serverRequest): ResponseInterface
     {
         $response = $this->resolve()->handle($serverRequest);
@@ -71,9 +53,6 @@ class Dispatcher
         return $response;
     }
 
-    /**
-     * @return RequestHandlerInterface
-     */
     private function resolve(): RequestHandlerInterface
     {
         return $this->splStack->isEmpty() ?

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tests\middleware;
+namespace Tests\Middleware;
 
 use FastD\Http\Response\Text as Response;
 use FastD\Middleware\Middleware;

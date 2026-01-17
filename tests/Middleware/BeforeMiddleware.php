@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace tests\middleware;
+namespace Tests\Middleware;
 
 use FastD\Http\Response\Text as Response;
 use FastD\Middleware\Middleware;
@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class Before extends Middleware
+class BeforeMiddleware extends Middleware
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

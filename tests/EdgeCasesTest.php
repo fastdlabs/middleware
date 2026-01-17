@@ -5,14 +5,14 @@ use FastD\Http\Response\Text as Response;
 use FastD\Middleware\Dispatcher;
 use FastD\Middleware\Middleware;
 use FastD\Middleware\RequestHandler;
-use tests\middleware\After;
-use tests\middleware\Before;
+use Tests\Middleware\AfterMiddleware;
+use Tests\Middleware\BeforeMiddleware;
 
 class EdgeCasesTest extends \PHPUnit\Framework\TestCase
 {
     public function testMultipleDispatchCallsOnSameRequest()
     {
-        $dispatcher = new Dispatcher([new Before(), new After()]);
+        $dispatcher = new Dispatcher([new BeforeMiddleware(), new AfterMiddleware()]);
         
         $request = new ServerRequest('GET', '/test');
         
@@ -21,7 +21,7 @@ class EdgeCasesTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('before after ending request handler', $response1->getContents());
         
         // Second dispatch with fresh dispatcher since the first one clears its stack
-        $dispatcher2 = new Dispatcher([new Before(), new After()]);
+        $dispatcher2 = new Dispatcher([new BeforeMiddleware(), new AfterMiddleware()]);
         $response2 = $dispatcher2->dispatch(clone $request);
         $this->assertEquals('before after ending request handler', $response2->getContents());
     }
@@ -31,11 +31,11 @@ class EdgeCasesTest extends \PHPUnit\Framework\TestCase
         $dispatcher = new Dispatcher();
         
         // Add multiple middlewares to test deep nesting
-        $dispatcher->push(new Before());
-        $dispatcher->push(new Before());
-        $dispatcher->push(new Before());
-        $dispatcher->push(new Before());
-        $dispatcher->push(new After());
+        $dispatcher->push(new BeforeMiddleware());
+        $dispatcher->push(new BeforeMiddleware());
+        $dispatcher->push(new BeforeMiddleware());
+        $dispatcher->push(new BeforeMiddleware());
+        $dispatcher->push(new AfterMiddleware());
         
         $response = $dispatcher->dispatch(new ServerRequest('GET', '/'));
         
@@ -54,7 +54,7 @@ class EdgeCasesTest extends \PHPUnit\Framework\TestCase
                 
                 return $response;
             }
-        }, new After()]);
+        }, new AfterMiddleware()]);
         
         $response = $dispatcher->dispatch(new ServerRequest('GET', '/')->withQueryParams(['param' => 'value']));
         
@@ -65,8 +65,8 @@ class EdgeCasesTest extends \PHPUnit\Framework\TestCase
     {
         $dispatcher = new Dispatcher();
         
-        $before = new Before();
-        $after = new After();
+        $before = new BeforeMiddleware();
+        $after = new AfterMiddleware();
         
         // Mix different stack operations
         $dispatcher->push($before);      // Stack: [before]
@@ -85,8 +85,8 @@ class EdgeCasesTest extends \PHPUnit\Framework\TestCase
     {
         $dispatcher = new Dispatcher();
         
-        $before = new Before();
-        $after = new After();
+        $before = new BeforeMiddleware();
+        $after = new AfterMiddleware();
         
         // Add middlewares
         $dispatcher->push($before);

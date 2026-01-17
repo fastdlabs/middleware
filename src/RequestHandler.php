@@ -16,13 +16,6 @@ class RequestHandler implements RequestHandlerInterface
     {
     }
 
-    /**
-     * Dispatch the next available middleware and return the response.
-     *
-     * @param ServerRequestInterface $request
-     *
-     * @return ResponseInterface
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return call_user_func($this->callback, $request);

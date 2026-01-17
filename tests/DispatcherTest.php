@@ -1,33 +1,24 @@
 <?php
-/**
- * @author    jan huang <bboyjanhuang@gmail.com>
- * @copyright 2020
- *
- * @link      https://www.github.com/fastdlabs
- * @link      https://www.fastdlabs.com/
- */
 
-
-use FastD\Http\Response;
+use FastD\Http\Response\Text as Response;
 use FastD\Http\Request\ServerRequest;
 use FastD\Http\Stream;
 use FastD\Middleware\Dispatcher;
-use tests\middleware\After;
-use tests\middleware\Before;
-
+use Tests\Middleware\AfterMiddleware;
+use Tests\Middleware\BeforeMiddleware;
 
 class DispatcherTest extends \PHPUnit\Framework\TestCase
 {
     protected function createDefaultHandler(): RequestHandler
     {
         return new RequestHandler(function (ServerRequest $request) {
-            return new Response('default response');
+            return (new Response())->withContents('default response');
         });
     }
 
     public function testDispatcher()
     {
-        $dispatcher = new Dispatcher([new After()]);
+        $dispatcher = new Dispatcher([new AfterMiddleware()]);
         // 修改 After 中间件，让它在链的最后提供响应
         $res = $dispatcher->dispatch(new ServerRequest('GET', '/'));
 
@@ -37,8 +28,8 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
     public function testDispatcherSequence()
     {
         $dispatcher = new Dispatcher();
-        $dispatcher->push(new Before()); // 先执行，底层运用队列，先进先出
-        $dispatcher->push(new After()); // 后执行
+        $dispatcher->push(new BeforeMiddleware()); // 先执行，底层运用队列，先进先出
+        $dispatcher->push(new AfterMiddleware()); // 后执行
 
         $res = $dispatcher->dispatch(new ServerRequest('GET', '/foo'));
         $this->assertEquals('before after ending request handler', $res->getContents());
@@ -56,7 +47,7 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
     public function testPushAndPop()
     {
         $dispatcher = new Dispatcher();
-        $middleware = new After();
+        $middleware = new AfterMiddleware();
         
         $result = $dispatcher->push($middleware);
         $this->assertSame($dispatcher, $result);
@@ -68,7 +59,7 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
     public function testUnshiftAndShift()
     {
         $dispatcher = new Dispatcher();
-        $middleware = new Before();
+        $middleware = new BeforeMiddleware();
         
         $result = $dispatcher->unshift($middleware);
         $this->assertSame($dispatcher, $result);
@@ -81,8 +72,8 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
     {
         $dispatcher = new Dispatcher();
         
-        $first = new Before();
-        $second = new After();
+        $first = new BeforeMiddleware();
+        $second = new AfterMiddleware();
         
         // Test push/pop (LIFO)
         $dispatcher->push($first);
@@ -105,8 +96,8 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
     {
         $dispatcher = new Dispatcher();
         
-        $middleware1 = new Before();
-        $middleware2 = new After();
+        $middleware1 = new BeforeMiddleware();
+        $middleware2 = new AfterMiddleware();
         
         $dispatcher->push($middleware1); // [middleware1]
         $dispatcher->unshift($middleware2); // [middleware2, middleware1]
@@ -119,12 +110,12 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
 
     public function testConstructorWithInitialStack()
     {
-        $initialMiddlewares = [new Before(), new After()];
+        $initialMiddlewares = [new BeforeMiddleware(), new AfterMiddleware()];
         $dispatcher = new Dispatcher($initialMiddlewares);
         
         // When we pop, we should get the last item pushed initially
-        $this->assertInstanceOf(After::class, $dispatcher->pop());
-        $this->assertInstanceOf(Before::class, $dispatcher->pop());
+        $this->assertInstanceOf(AfterMiddleware::class, $dispatcher->pop());
+        $this->assertInstanceOf(BeforeMiddleware::class, $dispatcher->pop());
     }
     
     public function testConstructWithEmptyArray()
@@ -138,9 +129,9 @@ class DispatcherTest extends \PHPUnit\Framework\TestCase
     public function testNestedMiddlewareChain()
     {
         $dispatcher = new Dispatcher();
-        $dispatcher->push(new Before());
-        $dispatcher->push(new Before()); // Add another Before to test nesting
-        $dispatcher->push(new After());
+        $dispatcher->push(new BeforeMiddleware());
+        $dispatcher->push(new BeforeMiddleware()); // Add another Before to test nesting
+        $dispatcher->push(new AfterMiddleware());
         
         $res = $dispatcher->dispatch(new ServerRequest('GET', '/'));
         $this->assertEquals('before before after ending request handler', $res->getContents());
