@@ -31,7 +31,7 @@ composer require "fastd/middleware" -vvv
 use FastD\Middleware\Dispatcher;
 use FastD\Middleware\Middleware;
 use FastD\Http\Request\ServerRequest;
-use FastD\Middleware\RequestHandler;
+use FastD\Http\Response\Text as Response;
 
 // 创建一个中间件类
 class ExampleMiddleware extends Middleware
@@ -45,11 +45,19 @@ class ExampleMiddleware extends Middleware
     }
 }
 
+// 创建最终处理器
+class FinalHandler extends Middleware
+{
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        return (new Response())->withContents("Final response");
+    }
+}
+
 // 创建调度器并添加中间件
-$dispatcher = new Dispatcher([
-    new ExampleMiddleware(),
-    // 可以添加更多中间件
-]);
+$dispatcher = new Dispatcher();
+$dispatcher->push(new FinalHandler());
+$dispatcher->push(new ExampleMiddleware());
 
 // 发起请求
 $response = $dispatcher->dispatch(new ServerRequest('GET', '/'));
@@ -87,6 +95,7 @@ FastD Middleware 包含以下核心组件：
 1. **Dispatcher**: 负责管理中间件栈，提供 push/pop/unshift/shift 操作方法，并执行中间件链
 2. **Middleware**: 抽象中间件基类，实现了 PSR-15 的 MiddlewareInterface 接口
 3. **RequestHandler**: 请求处理器，封装回调函数并实现 RequestHandlerInterface 接口
+4. **CallbackMiddleware**: 便捷中间件类，允许通过闭包创建中间件
 
 ### 中间件执行流程
 
@@ -121,6 +130,36 @@ class CustomMiddleware extends Middleware
     }
 }
 ```
+
+### 回调中间件
+
+您可以使用 `CallbackMiddleware` 来快速创建中间件：
+
+```php
+use FastD\Middleware\CallbackMiddleware;
+
+$middleware = new CallbackMiddleware(function ($request, $handler) {
+    // 前置逻辑
+    $response = $handler->handle($request);
+    // 后置逻辑
+    return $response;
+});
+```
+
+## 运行示例
+
+我们提供了一个示例文件来演示中间件的使用方法：
+
+```bash
+php example.php
+```
+
+该示例展示了：
+- 基本中间件使用
+- 回调中间件使用  
+- 中间件栈操作
+- 复杂中间件链
+- 异常处理
 
 ## 贡献
 
