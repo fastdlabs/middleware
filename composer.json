@@ -1,7 +1,6 @@
 {
     "name": "fastd/middleware",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "JanHuang",
