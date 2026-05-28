@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=8.2",
-        "fastd/http": "dev-develop",
+        "fastd/http": "^8.0",
         "psr/http-server-middleware": "*"
     },
     "require-dev": {
