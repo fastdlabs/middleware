@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.4",
         "fastd/http": "^8.0",
         "psr/http-server-middleware": "*"
     },
