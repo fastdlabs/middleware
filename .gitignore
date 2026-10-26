@@ -8,3 +8,30 @@ composer.lock
 # Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 # composer.lock
+# --- OS generated ---
+.DS_Store
+Thumbs.db
+
+# --- IDE / editor ---
+.vscode/
+.fleet/
+.trae/
+.history/
+
+# --- PHP test / build artifacts ---
+.phpunit.cache/
+coverage/
+build/
+
+# --- local runtime ---
+runtime/
+*.log
+*.pid
+
+# --- environment ---
+.env
+.env.local
+.env.*.local
+
+# --- agent workspace ---
+.qoder/
