@@ -13,7 +13,7 @@ FastD Middleware 是一个实现了 PSR-15 HTTP 服务器中间件标准的轻�
 
 ## 环境依赖说明
 
-* PHP >= 8.4
+* PHP >= 8.4.1
 * PSR-7 HTTP 消息接口实现
 * PSR-15 HTTP 服务器中间件标准
 
