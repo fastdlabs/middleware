@@ -167,7 +167,7 @@ php example.php
 
 如果你有兴趣参与开发，可以尝试以下方式：
 
-* 在你的项目中使用，将遇到的问题 [反馈](https://github.com/JanHuang/fastD/issues)。
+* 在你的项目中使用，将遇到的问题 [反馈](https://github.com/fastdlabs/middleware/issues)。
 * 提出更好的建议或功能需求。
 
 ## License

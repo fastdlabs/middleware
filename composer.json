@@ -1,5 +1,6 @@
 {
     "name": "fastd/middleware",
+    "description": "PSR-15 HTTP middleware stack for FastD.",
     "license": "MIT",
     "authors": [
         {
