@@ -1,7 +1,7 @@
 # FastD Middleware
 
-[![Build Status](https://travis-ci.org/fastdlabs/middleware.svg?branch=master)](https://travis-ci.org/fastdlabs/middleware)
-[![Support PSR15](https://img.shields.io/badge/support-psr15-brightgreen.svg)](https://travis-ci.org/fastdlabs/middleware)
+[![CI](https://github.com/fastdlabs/middleware/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fastdlabs/middleware/actions/workflows/ci.yml)
+[![Support PSR15](https://img.shields.io/badge/support-psr15-brightgreen.svg)](https://www.php-fig.org/psr/psr-15/)
 [![Latest Stable Version](https://poser.pugx.org/fastd/middleware/v/stable)](https://packagist.org/packages/fastd/middleware)
 [![Total Downloads](https://poser.pugx.org/fastd/middleware/downloads)](https://packagist.org/packages/fastd/middleware)
 [![License](https://poser.pugx.org/fastd/middleware/license)](https://packagist.org/packages/fastd/middleware)
